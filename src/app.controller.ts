@@ -15,4 +15,9 @@ export class AppController {
   getBreedImages(@Param('breed') idBreed: string) {
     return this.appService.getBreedImages(idBreed);
   }
+
+  @Get('/randomImages/:n')
+  getNRandomImages(@Param('n') n: number) {
+    return this.appService.getRandomImages(n);
+  }
 }

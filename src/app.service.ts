@@ -10,13 +10,22 @@ export class AppService {
 
   //metodo para acceder a los servicios externos, asi obtengo las imagenes
   async getBreedImages(breed: string) {
-    //Axios.get("https://dog.ceo/api/breed/hound/images");
-
-    //usamos await porque esperamos a obtener la respuesta
     const result = await Axios.get(`https://dog.ceo/api/breed/${breed}/images`);
 
-    //mostramos por consola los datos de las imagenes usando .data
     console.log(result.data);
-    return result.data;
+    return {
+      amount: result.data.message.length,
+      breedskgikgk: result.data.message,
+    };
+  }
+
+  async getRandomImages(n: number): Promise<string[]> {
+    let arrayImages: string[] = [];
+    for (let i = 0; i < n; i++) {
+      const result = await Axios.get(`https://dog.ceo/api/breeds/image/random`);
+      console.log(result.data);
+      arrayImages.push(result.data.message);
+    }
+    return arrayImages;
   }
 }
