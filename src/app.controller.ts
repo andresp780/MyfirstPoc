@@ -15,4 +15,12 @@ export class AppController {
   getBreedImages(@Param('breed') idBreed: string) {
     return this.appService.getBreedImages(idBreed);
   }
+  @Get('/subbreeds/:breed')
+  getSubBreed(@Param('breed') idBreed: string) {
+    return this.appService.getsubbreedList(idBreed);
+  }
+
+
+
+
 }
