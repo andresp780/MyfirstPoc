@@ -20,10 +20,8 @@ getBreedImages(@Param('breed') idBreed: string) {
 
 
 //obtener lista de sub-raza de perro
-  @Get('/breed/:breed')
-  getListBreed(@Param('breed') breed: string) {
-    return this.appService.getsubbreedList(breed);
+  @Get('/breed/:breed/:letter')//aqui indicamos los parametros de entrada 
+  getListBreed(@Param('breed') breed: string,@Param('letter') letter: string,) {
+    return this.appService.getsubbreedList(breed,letter);
   }
-
-
 }
