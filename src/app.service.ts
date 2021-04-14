@@ -25,6 +25,14 @@ export class AppService {
   
 
   async getsubbreedList(breed: string) {
+    /*fetch('https://dog.ceo/api/breed/${breed}/list')
+    .then(res=>{
+      if(res.ok){
+        console.log('Datos obtenidos')
+      }
+
+    }
+    */
     const subresult=await Axios.get(`https://dog.ceo/api/breed/${breed}/list`);
     
     const list:string[] =subresult.data.message;
