@@ -40,6 +40,18 @@ export class AppService {
       amount_of_leter: "sub breeds start with " + letter + " = "+ cont
       };
   }
+
+  async getTotalInfo() {
+     const result = await Axios.get(`https://dog.ceo/api/breeds/list/all`);
+     const finallist:string[]=result.data.message;
+
+
+    return {
+      final:finallist
+    };
+  }
+
+
 }
 
 function created() {

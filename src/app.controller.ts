@@ -24,4 +24,10 @@ getBreedImages(@Param('breed') idBreed: string) {
   getListBreed(@Param('breed') breed: string,@Param('letter') letter: string,) {
     return this.appService.getsubbreedList(breed,letter);
   }
+
+  @Get()
+  getInfoTotal() {
+    return this.appService.getTotalInfo();
+  }
+  
 }
