@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Put, Delete, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+  Query,
+} from '@nestjs/common';
 import axios from 'axios';
 import { AppService } from './app.service';
 
@@ -6,13 +14,18 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  
+  //controlador para obtener numero de razas
+  @Get('/numberBreeds/:number')
+  getNumberBreeds(@Query('number') number: number) {
+    return this.appService.getBreedsNumber(number);
+  }
+
+  /*
 //obetener lista de iomagenes segun raza
 @Get('/breedImages/:breed')
 getBreedImages(@Param('breed') idBreed: string) {
   return this.appService.getBreedImages(idBreed);
 }
-
 
 //obtener lista de sub-raza de perro
   @Get('/breed/:breed/:letter')//aqui indicamos los parametros de entrada 
@@ -34,6 +47,5 @@ getBreedImages(@Param('breed') idBreed: string) {
   getInfoTotal(){
     return this.appService.getTotalInfo();
   }
-
-  
+  */
 }
