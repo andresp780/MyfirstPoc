@@ -34,13 +34,13 @@ getImage(@Param('breed') breed: string,@Param('numImage') nImage: number){
   return this.appService.getImageNum(breed,nImage);
 }
 
-@Get()//aqui indicamos los parametros de entrada 
+@Get('getAllBreeds')//aqui indicamos los parametros de entrada 
 getInfoTotal(){
   return this.appService.getTotalInfo();
 }
 
 //controlador para obtener numero de razas
-@Get('/numberBreeds/:number')
+@Get('/numberBreeds')
 getNumberBreeds(@Query('number') number: number) {
   return this.appService.getBreedsNumber(number);
 }

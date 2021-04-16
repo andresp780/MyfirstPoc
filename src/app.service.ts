@@ -111,7 +111,7 @@ export class AppService {
 //metodo introducir numero de perros aleatorio y obtenemos img, subbreed y img random
   async getBreedsNumber(breedsNumber: number){
     //obtenemos objeto JSON con la lista entera de razas
-    const breedsJson= await (await Axios.get(`https://dog.ceo/api/breeds/list/all`)).data.message;
+    const breedsJson= (await Axios.get(`https://dog.ceo/api/breeds/list/all`)).data.message;
 
     //parseamos JSON a Array obteniendo un array nuevo 
     const arrAllBreeds = Object.keys(breedsJson);
@@ -128,7 +128,7 @@ export class AppService {
     //llenamos el array razas aleatorias con numeros random
     for(var i=0;i<breedsNumber;i++){
       var nRandomBreed =Math.floor(Math.random()*arrAllBreeds.length+1);
-      var breedImage: String =await (await Axios.get(`https://dog.ceo/api/breed/${arrAllBreeds[nRandomBreed]}/images/random`)).data.message;
+      var breedImage: String = (await Axios.get(`https://dog.ceo/api/breed/${arrAllBreeds[nRandomBreed]}/images/random`)).data.message;
       randomNumberDogs.push(arrAllBreeds[nRandomBreed]);
       const subBreed:string[] =breedsJson[arrAllBreeds[nRandomBreed]]
       
