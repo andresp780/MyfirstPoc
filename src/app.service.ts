@@ -45,7 +45,7 @@ export class AppService {
     const list:string[] =subresult.data.message;
     const amount= list.length;
 
-    const selectimages:string[] = await (await Axios.get(`https://dog.ceo/api/breed/${breed}/images`)).data.message;
+    const selectimages:string[] =  (await Axios.get(`https://dog.ceo/api/breed/${breed}/images`)).data.message;
     let valorDado = Math.floor(Math.random()*selectimages.length+1);
 
     
@@ -69,7 +69,7 @@ export class AppService {
   //obtener img dando el numero de imagen y dando breed
   async getImageNum(breed:string,nImage: number) {
 
-    const selectimages:string[] = await (await Axios.get(`https://dog.ceo/api/breed/${breed}/images`)).data.message;
+    const selectimages:string[] =  (await Axios.get(`https://dog.ceo/api/breed/${breed}/images`)).data.message;
     let imgPath;
     
 
@@ -93,7 +93,7 @@ export class AppService {
   async getTotalInfo() {
 
     //parseamos JSON a Array obteniendo un array nuevo 
-    const breedsJson= await (await Axios.get(`https://dog.ceo/api/breeds/list/all`)).data.message;
+    const breedsJson=  (await Axios.get(`https://dog.ceo/api/breeds/list/all`)).data.message;
     const arrAllBreeds = Object.keys(breedsJson);
     let totalamount=arrAllBreeds.length;
     
@@ -111,29 +111,30 @@ export class AppService {
 //metodo introducir numero de perros aleatorio y obtenemos img, subbreed y img random
   async getBreedsNumber(breedsNumber: number){
     //obtenemos objeto JSON con la lista entera de razas
-    const breedsJson= (await Axios.get(`https://dog.ceo/api/breeds/list/all`)).data.message;
+    const breedsJson=  (await Axios.get(`https://dog.ceo/api/breeds/list/all`)).data.message;
 
     //parseamos JSON a Array obteniendo un array nuevo 
     const arrAllBreeds = Object.keys(breedsJson);
     
     //console.log(arrAllBreeds);
 
-    //declaramos array con la longitus del numero introducido      //let arrNumber=[].length=breedsNumber;
-    let randomNumberDogs=[];
-    //randomNumberDogs.length=breedsNumber;
+    //declaramos array con la longitus del numero introducido
+    const randomNumberDogs=[];
+
 
     //decalramos el array final que tendremos 
-    let finalArray=[];
+    const finalArray=[];
 
     //llenamos el array razas aleatorias con numeros random
     for(var i=0;i<breedsNumber;i++){
-      var nRandomBreed =Math.floor(Math.random()*arrAllBreeds.length+1);
-      var breedImage: String = (await Axios.get(`https://dog.ceo/api/breed/${arrAllBreeds[nRandomBreed]}/images/random`)).data.message;
-      randomNumberDogs.push(arrAllBreeds[nRandomBreed]);
-      const subBreed:string[] =breedsJson[arrAllBreeds[nRandomBreed]]
+      const nRandomBreed = Math.floor(Math.random()*arrAllBreeds.length+1);
+      const breedName = arrAllBreeds[nRandomBreed];
+      var breedImage: String = (await Axios.get(`https://dog.ceo/api/breed/${breedName}/images/random`)).data.message;
+      randomNumberDogs.push(breedName);
+      const subBreed:string[] =breedsJson[breedName]
       
-      const a={
-        finalBreed:randomNumberDogs[i],
+      const a = {
+        finalBreed:breedName,
         finaSsubBreed:subBreed,
         finalUrlImage:breedImage
       }

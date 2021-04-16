@@ -34,7 +34,7 @@ getImage(@Param('breed') breed: string,@Param('numImage') nImage: number){
   return this.appService.getImageNum(breed,nImage);
 }
 
-@Get('getAllBreeds')//aqui indicamos los parametros de entrada 
+@Get('/all-breeds')//aqui indicamos los parametros de entrada 
 getInfoTotal(){
   return this.appService.getTotalInfo();
 }
