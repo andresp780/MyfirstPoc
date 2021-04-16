@@ -6,8 +6,109 @@ import { findSourceMap } from 'node:module';
 @Injectable()
 export class AppService {
 
+  //metodo para obtener list img de breed
+  async getBreedImages(breed: string) {
+    const result = await Axios.get(`https://dog.ceo/api/breed/${breed}/images`);
+    //asi accedo a las imagenes externas
 
-//metodo para saber el numero de razas que queramos 
+    
+    console.log(result.data);
+  //mostramos por consola los datos de las imagenes usando .data
+    return result.data;
+  }
+  //metodo obtener subbreed , cantidad de subbreed y cantidad de subbreed segun la letra introducida
+  async getsubbreedList(breed: string, letter: string) {
+ 
+    const subresult=await Axios.get(`https://dog.ceo/api/breed/${breed}/list`);
+    const list:string[] =subresult.data.message;
+    const amount= list.length;
+    var cont=0;
+
+    cont=list.filter(breed =>(breed.startsWith(letter))).length
+
+    console.log(list);
+    console.log(subresult.data.message.length);
+    console.log(cont);
+
+    return  {
+      breeds:list,
+      amountt:"total amount of breeds = " +amount,
+      amount_of_leter: "sub breeds start with " + letter + " = "+ cont,
+
+      };
+  }
+  
+  //obtener img random segun breed introducida
+  async getRandomImage(breed:string) {
+ 
+    const subresult=await Axios.get(`https://dog.ceo/api/breed/${breed}/list`);
+    const list:string[] =subresult.data.message;
+    const amount= list.length;
+
+    const selectimages:string[] = await (await Axios.get(`https://dog.ceo/api/breed/${breed}/images`)).data.message;
+    let valorDado = Math.floor(Math.random()*selectimages.length+1);
+
+    
+    let randompath=selectimages[valorDado];
+
+
+    list.includes(randompath)
+
+    console.log("the breed is: " + breed)
+    console.log("number of image is : " + valorDado)
+    console.log("this is the path of image : " +randompath);
+
+    return  {
+      bread:"the breed is: " + breed,
+      random_path:"this is the path of image : " + randompath,
+      num_image:"number of image is : " + valorDado,
+
+      };
+  }
+  
+  //obtener img dando el numero de imagen y dando breed
+  async getImageNum(breed:string,nImage: number) {
+
+    const selectimages:string[] = await (await Axios.get(`https://dog.ceo/api/breed/${breed}/images`)).data.message;
+    let imgPath;
+    
+
+    if(nImage>selectimages.length){imgPath="Numero introducido demasiado grande";
+    }else{
+      imgPath=selectimages[nImage];
+    }
+
+    console.log("the breed is: " + breed)
+    console.log("this is the path of image : " +imgPath);
+
+    return  {
+      bread:"the breed is: " + breed,
+      random_path:"this is the path of image : " + imgPath,
+      num_image:"number of image is : " + nImage,
+
+      };
+  }
+  
+  //obtener lista total de todas las breed que hay 
+  async getTotalInfo() {
+
+    //parseamos JSON a Array obteniendo un array nuevo 
+    const breedsJson= await (await Axios.get(`https://dog.ceo/api/breeds/list/all`)).data.message;
+    const arrAllBreeds = Object.keys(breedsJson);
+    let totalamount=arrAllBreeds.length;
+    
+    
+    
+    console.log(arrAllBreeds);
+    console.log(totalamount)
+
+    return  {
+      bread:arrAllBreeds,
+      amount_breed:totalamount
+      };
+  }
+
+//metodo introducir numero de perros aleatorio y obtenemos img, subbreed y img random
   async getBreedsNumber(breedsNumber: number){
     //obtenemos objeto JSON con la lista entera de razas
     const breedsJson= await (await Axios.get(`https://dog.ceo/api/breeds/list/all`)).data.message;
@@ -18,37 +119,27 @@ export class AppService {
     //console.log(arrAllBreeds);
 
     //declaramos array con la longitus del numero introducido      //let arrNumber=[].length=breedsNumber;
-    let arrNumber=[];
-    arrNumber.length=breedsNumber;
+    let randomNumberDogs=[];
+    //randomNumberDogs.length=breedsNumber;
 
     //decalramos el array final que tendremos 
     let finalArray=[];
 
-
-
     //llenamos el array razas aleatorias con numeros random
-    for(var i=0;i<arrNumber.length;i++){
-      var breed =Math.floor(Math.random()*arrAllBreeds.length+1);
-      arrNumber[i]=arrAllBreeds[breed];
-      var breedImage: String =await (await Axios.get(`https://dog.ceo/api/breed/${arrAllBreeds[breed]}/images/random`)).data.message;
-      const subBreed:string[] = await (await Axios.get(`https://dog.ceo/api/breed/${arrAllBreeds[breed]}/list`)).data.message;
-
-
+    for(var i=0;i<breedsNumber;i++){
+      var nRandomBreed =Math.floor(Math.random()*arrAllBreeds.length+1);
+      var breedImage: String =await (await Axios.get(`https://dog.ceo/api/breed/${arrAllBreeds[nRandomBreed]}/images/random`)).data.message;
+      randomNumberDogs.push(arrAllBreeds[nRandomBreed]);
+      const subBreed:string[] =breedsJson[arrAllBreeds[nRandomBreed]]
+      
       const a={
-        finalBreed:arrNumber[i],
+        finalBreed:randomNumberDogs[i],
         finaSsubBreed:subBreed,
         finalUrlImage:breedImage
       }
-
-
       finalArray.push(a);
-      //console.log(arrNumber,breedImage,subBreed)
     }
     return finalArray;
   }
-  
 }
 
-function created() {
-  throw new Error('Function not implemented.');
-}

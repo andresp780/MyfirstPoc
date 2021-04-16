@@ -1,51 +1,51 @@
 import {
   Controller,
   Get,
-  Post,
-  Put,
-  Delete,
-  Param,
   Query,
+  Param
 } from '@nestjs/common';
-import axios from 'axios';
+
 import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  //controlador para obtener numero de razas
-  @Get('/numberBreeds/:number')
-  getNumberBreeds(@Query('number') number: number) {
-    return this.appService.getBreedsNumber(number);
-  }
-
-  /*
+  
 //obetener lista de iomagenes segun raza
 @Get('/breedImages/:breed')
 getBreedImages(@Param('breed') idBreed: string) {
   return this.appService.getBreedImages(idBreed);
 }
-
 //obtener lista de sub-raza de perro
-  @Get('/breed/:breed/:letter')//aqui indicamos los parametros de entrada 
-  getListBreed(@Param('breed') breed: string,@Param('letter') letter: string,) {
-    return this.appService.getsubbreedList(breed,letter);
-  }
+@Get('/breed/:breed/:letter')//aqui indicamos los parametros de entrada 
+getListBreed(@Param('breed') breed: string,@Param('letter') letter: string,) {
+  return this.appService.getsubbreedList(breed,letter);
+}
+
+@Get('/breed/:breed')//aqui indicamos los parametros de entrada 
+getImageRandom(@Param('breed') breed: string){
+  return this.appService.getRandomImage(breed);
+}
 
 
-  @Get('/breed/:breed')//aqui indicamos los parametros de entrada 
-  getImageRandom(@Param('breed') breed: string){
-    return this.appService.getRandomImage(breed);
-  }
+@Get('/numImage/:breed/:numImage')//aqui indicamos los parametros de entrada 
+getImage(@Param('breed') breed: string,@Param('numImage') nImage: number){
+  return this.appService.getImageNum(breed,nImage);
+}
 
-  @Get('/numImage/:breed/:numImage')//aqui indicamos los parametros de entrada 
-  getImage(@Param('breed') breed: string,@Param('numImage') nImage: number){
-    return this.appService.getImageNum(breed,nImage);
-  }
-  @Get()//aqui indicamos los parametros de entrada 
-  getInfoTotal(){
-    return this.appService.getTotalInfo();
-  }
-  */
+@Get()//aqui indicamos los parametros de entrada 
+getInfoTotal(){
+  return this.appService.getTotalInfo();
+}
+
+//controlador para obtener numero de razas
+@Get('/numberBreeds/:number')
+getNumberBreeds(@Query('number') number: number) {
+  return this.appService.getBreedsNumber(number);
+}
+
+
+
+
 }
