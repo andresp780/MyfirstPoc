@@ -19,8 +19,4 @@ export class AppController {
   getSubBreed(@Param('breed') idBreed: string) {
     return this.appService.getsubbreedList(idBreed);
   }
-
-
-
-
 }
